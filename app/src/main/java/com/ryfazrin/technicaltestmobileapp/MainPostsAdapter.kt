@@ -22,19 +22,10 @@ class MainPostsAdapter(
 
     inner class ListViewHolder(private val binding: ItemRowPostBinding) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(posts: PostsResponseItem) {
-//          fun bind(posts: PostsResponseItem) {
+        fun bind(posts: PostsResponseItem, user: DetailUserResponse) {
             with(binding) {
                 tvPostTitle.text = posts.title
                 tvPostBody.text = posts.body
-//                tvPostUsername.text = user.name
-//                tvPostUserCompany.text = user.company.name
-//                tvPostUsername.text = posts.userId.toString()
-            }
-        }
-
-        fun bindUser(user: DetailUserResponse) {
-            with(binding) {
                 tvPostUsername.text = user.name
                 tvPostUserCompany.text = user.company.name
             }
@@ -50,8 +41,7 @@ class MainPostsAdapter(
     }
 
     override fun onBindViewHolder(holder: ListViewHolder, position: Int) {
-        holder.bindUser(listUser[position])
-        holder.bind(listPost[position])
+        holder.bind(listPost[position], listUser[position])
         Log.e("MainPostsAdapter", "listUser: ${listUser[0].name}")
 
         holder.itemView.setOnClickListener {
