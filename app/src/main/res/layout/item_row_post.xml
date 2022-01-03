@@ -28,6 +28,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="username"
+        android:textStyle="bold"
         android:layout_marginTop="4dp"
         app:layout_constraintStart_toStartOf="@+id/tv_post_title"
         app:layout_constraintTop_toBottomOf="@+id/tv_post_title" />
@@ -48,6 +49,8 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="9dp"
+        android:maxLength="100"
+        android:justificationMode="inter_word"
         android:text="veritatis unde neque eligendi\nquae quod architecto quo neque vitae\nest illo sit tempora doloremque fugit quod\net et vel beatae sequi ullam sed tenetur perspiciatis"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
