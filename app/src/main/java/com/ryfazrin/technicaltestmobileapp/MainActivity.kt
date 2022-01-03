@@ -1,5 +1,6 @@
 package com.ryfazrin.technicaltestmobileapp
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -10,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.ryfazrin.technicaltestmobileapp.data.DetailUserResponse
 import com.ryfazrin.technicaltestmobileapp.data.PostsResponseItem
 import com.ryfazrin.technicaltestmobileapp.databinding.ActivityMainBinding
+import com.ryfazrin.technicaltestmobileapp.ui.detailpost.DetailPostActivity
 
 class MainActivity : AppCompatActivity() {
 
@@ -56,18 +58,18 @@ class MainActivity : AppCompatActivity() {
         binding.rvPosts.adapter = adapter
 
         adapter.setOnItemClickCallback(object : MainPostsAdapter.OnItemCLickCallback {
-            override fun onItemClicked(data: PostsResponseItem) {
-//                detailUserViewModel.findUser(data.userId)
-                showSelectedPost(data)
+            override fun onItemClicked(post: PostsResponseItem, user: DetailUserResponse) {
+                showSelectedPost(post, user)
             }
         })
     }
 
-    private fun showSelectedPost(post: PostsResponseItem) {
-//        val moveDetalIntent = Intent(this@MainActivity, DetailPostActivity::class.java)
-//        moveDetalIntent.putExtra(DetailPostActivity.EXTRA_POST, post.id)
-//
-//        startActivity(moveDetalIntent)
+    private fun showSelectedPost(post: PostsResponseItem, user: DetailUserResponse) {
+        val moveDetalIntent = Intent(this@MainActivity, DetailPostActivity::class.java)
+        moveDetalIntent.putExtra(DetailPostActivity.EXTRA_POST, post)
+        moveDetalIntent.putExtra(DetailPostActivity.EXTRA_DETAIL_USER, user)
+
+        startActivity(moveDetalIntent)
     }
 
     private fun showLoading(isLoading: Boolean) {
