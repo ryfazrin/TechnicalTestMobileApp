@@ -50,11 +50,17 @@ class MainViewModel : ViewModel() {
 //                        _isMessage.value = false
 
                         try {
-                            for (post in responseBody) {
-                                findUser(post.userId)
+                            val jobGetUser = GlobalScope.launch {
+                                for (post in responseBody) {
+                                    findUser(post.userId)
+                                }
                             }
-                            _isLoading.value = false
-                            _posts.value = responseBody
+
+                            runBlocking {
+                                jobGetUser.join()
+                                _isLoading.value = false
+                                _posts.value = responseBody
+                            }
 
                         } catch (e: Exception) {
                             Log.e(TAG, "gagal: $e")
