@@ -25,13 +25,9 @@ class MainActivity : AppCompatActivity() {
         mainViewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory())
             .get(MainViewModel::class.java)
 
-        mainViewModel.posts.observe(this, { post ->
-            setPostData(post, mainViewModel.listUser)
+        mainViewModel.posts.observe(this, { posts ->
+            setPostData(posts, mainViewModel.listUser)
         })
-
-//        detailUserViewModel.user.observe(this, { user ->
-//
-//        })
 
         val layoutManager = LinearLayoutManager(this)
         binding.rvPosts.layoutManager = layoutManager
@@ -50,28 +46,13 @@ class MainActivity : AppCompatActivity() {
 
     private fun setPostData(posts: List<PostsResponseItem>, users: ArrayList<DetailUserResponse>) {
 
-//        detailUserViewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory())
-//            .get(DetailUserViewModel::class.java)
-
         val listPost = ArrayList<PostsResponseItem>()
         listPost.clear()
-
-//        val listUser = ArrayList<DetailUserResponse>()
-//        listUser.clear()
-
-//        for (post in posts) {
-//            detailUserViewModel.findUser(post.userId)
-//            listPost.add(post)
-//            detailUserViewModel.user.observe(this, { user ->
-//                listUser.add(user)
-//            })
-//        }
-//        Log.e("Main Activity", "setPostData: $listUser")
 
         listPost.addAll(posts)
 
         val adapter = MainPostsAdapter(listPost, users)
-//        val adapter = MainPostsAdapter(listPost)
+
         binding.rvPosts.adapter = adapter
 
         adapter.setOnItemClickCallback(object : MainPostsAdapter.OnItemCLickCallback {
