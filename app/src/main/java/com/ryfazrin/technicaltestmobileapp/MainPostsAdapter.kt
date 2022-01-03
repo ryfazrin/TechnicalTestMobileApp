@@ -7,6 +7,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.ryfazrin.technicaltestmobileapp.data.DetailUserResponse
 import com.ryfazrin.technicaltestmobileapp.data.PostsResponseItem
 import com.ryfazrin.technicaltestmobileapp.databinding.ItemRowPostBinding
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 
 class MainPostsAdapter(
     private val listPost: ArrayList<PostsResponseItem>,
@@ -41,17 +44,23 @@ class MainPostsAdapter(
     }
 
     override fun onBindViewHolder(holder: ListViewHolder, position: Int) {
-        holder.bind(listPost[position], listUser[position])
-        Log.e("MainPostsAdapter", "listUser: ${listUser[0].name}")
+        val jobListUser = GlobalScope.launch {
+            listUser
+        }
 
-        holder.itemView.setOnClickListener {
-            onItemClickCallback.onItemClicked(listPost[holder.adapterPosition])
+        runBlocking {
+            jobListUser.join()
+            holder.bind(listPost[position], listUser[position])
+
+            holder.itemView.setOnClickListener {
+                onItemClickCallback.onItemClicked(listPost[holder.adapterPosition], listUser[holder.adapterPosition])
+            }
         }
     }
 
     override fun getItemCount(): Int = listPost.size
 
     interface OnItemCLickCallback {
-        fun onItemClicked(data: PostsResponseItem)
+        fun onItemClicked(post: PostsResponseItem, user: DetailUserResponse)
     }
 }
