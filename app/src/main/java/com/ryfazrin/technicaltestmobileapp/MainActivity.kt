@@ -1,12 +1,13 @@
 package com.ryfazrin.technicaltestmobileapp
 
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.ryfazrin.technicaltestmobileapp.data.DetailUserResponse
 import com.ryfazrin.technicaltestmobileapp.data.PostsResponseItem
 import com.ryfazrin.technicaltestmobileapp.databinding.ActivityMainBinding
 
@@ -23,9 +24,14 @@ class MainActivity : AppCompatActivity() {
 
         mainViewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory())
             .get(MainViewModel::class.java)
+
         mainViewModel.posts.observe(this, { post ->
-            setPostData(post)
+            setPostData(post, mainViewModel.listUser)
         })
+
+//        detailUserViewModel.user.observe(this, { user ->
+//
+//        })
 
         val layoutManager = LinearLayoutManager(this)
         binding.rvPosts.layoutManager = layoutManager
@@ -42,27 +48,45 @@ class MainActivity : AppCompatActivity() {
         })
     }
 
-    private fun setPostData(posts: List<PostsResponseItem>) {
+    private fun setPostData(posts: List<PostsResponseItem>, users: ArrayList<DetailUserResponse>) {
+
+//        detailUserViewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory())
+//            .get(DetailUserViewModel::class.java)
+
         val listPost = ArrayList<PostsResponseItem>()
         listPost.clear()
 
+//        val listUser = ArrayList<DetailUserResponse>()
+//        listUser.clear()
+
+//        for (post in posts) {
+//            detailUserViewModel.findUser(post.userId)
+//            listPost.add(post)
+//            detailUserViewModel.user.observe(this, { user ->
+//                listUser.add(user)
+//            })
+//        }
+//        Log.e("Main Activity", "setPostData: $listUser")
+
         listPost.addAll(posts)
 
-        val adapter = MainPostsAdapter(listPost)
+        val adapter = MainPostsAdapter(listPost, users)
+//        val adapter = MainPostsAdapter(listPost)
         binding.rvPosts.adapter = adapter
 
         adapter.setOnItemClickCallback(object : MainPostsAdapter.OnItemCLickCallback {
             override fun onItemClicked(data: PostsResponseItem) {
+//                detailUserViewModel.findUser(data.userId)
                 showSelectedPost(data)
             }
         })
     }
 
     private fun showSelectedPost(post: PostsResponseItem) {
-        val moveDetalIntent = Intent(this@MainActivity, )
-        moveDetalIntent.putExtra()
-
-        startActivity()
+//        val moveDetalIntent = Intent(this@MainActivity, DetailPostActivity::class.java)
+//        moveDetalIntent.putExtra(DetailPostActivity.EXTRA_POST, post.id)
+//
+//        startActivity(moveDetalIntent)
     }
 
     private fun showLoading(isLoading: Boolean) {
