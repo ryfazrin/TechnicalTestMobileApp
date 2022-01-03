@@ -7,10 +7,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.ryfazrin.technicaltestmobileapp.data.DetailUserResponse
 import com.ryfazrin.technicaltestmobileapp.data.PostsResponseItem
 import com.ryfazrin.technicaltestmobileapp.databinding.ItemRowPostBinding
+import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 
+@DelicateCoroutinesApi
 class MainPostsAdapter(
     private val listPost: ArrayList<PostsResponseItem>,
     private val listUser: ArrayList<DetailUserResponse>

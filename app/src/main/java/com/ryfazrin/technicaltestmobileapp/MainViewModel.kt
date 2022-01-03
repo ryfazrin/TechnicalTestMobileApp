@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import com.ryfazrin.technicaltestmobileapp.api.ApiConfig
 import com.ryfazrin.technicaltestmobileapp.data.DetailUserResponse
 import com.ryfazrin.technicaltestmobileapp.data.PostsResponseItem
+import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
@@ -15,6 +16,7 @@ import retrofit2.Callback
 import retrofit2.Response
 import kotlin.math.log
 
+@DelicateCoroutinesApi
 class MainViewModel : ViewModel() {
 
     private val _posts = MutableLiveData<List<PostsResponseItem>>()
