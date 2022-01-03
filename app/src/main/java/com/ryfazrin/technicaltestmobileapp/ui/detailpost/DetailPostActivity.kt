@@ -16,6 +16,8 @@ class DetailPostActivity : AppCompatActivity() {
         binding = ActivityDetailPostBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
         val getPost: PostsResponseItem = intent.getParcelableExtra<PostsResponseItem>(EXTRA_POST) as PostsResponseItem
         val getUser: DetailUserResponse = intent.getParcelableExtra<DetailUserResponse>(
             EXTRA_DETAIL_USER) as DetailUserResponse
@@ -23,6 +25,11 @@ class DetailPostActivity : AppCompatActivity() {
         binding.tvDetailPostTitle.text = getPost.title
         binding.tvDetailPostName.text = getUser.name
         binding.tvDetailPostBody.text = getPost.body
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return true
     }
 
     companion object {
