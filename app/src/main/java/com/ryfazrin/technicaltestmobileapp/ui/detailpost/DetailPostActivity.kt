@@ -2,13 +2,25 @@ package com.ryfazrin.technicaltestmobileapp.ui.detailpost
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
+import android.view.View
+import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.ryfazrin.technicaltestmobileapp.MainPostsAdapter
+import com.ryfazrin.technicaltestmobileapp.MainViewModel
 import com.ryfazrin.technicaltestmobileapp.R
+import com.ryfazrin.technicaltestmobileapp.data.CommentsResponseItem
 import com.ryfazrin.technicaltestmobileapp.data.DetailUserResponse
 import com.ryfazrin.technicaltestmobileapp.data.PostsResponseItem
 import com.ryfazrin.technicaltestmobileapp.databinding.ActivityDetailPostBinding
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.launch
 
 class DetailPostActivity : AppCompatActivity() {
 
+    private lateinit var commentsViewModel: CommentsViewModel
     private lateinit var binding: ActivityDetailPostBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -22,14 +34,52 @@ class DetailPostActivity : AppCompatActivity() {
         val getUser: DetailUserResponse = intent.getParcelableExtra<DetailUserResponse>(
             EXTRA_DETAIL_USER) as DetailUserResponse
 
-        binding.tvDetailPostTitle.text = getPost.title
-        binding.tvDetailPostName.text = getUser.name
-        binding.tvDetailPostBody.text = getPost.body
+        commentsViewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory())
+            .get(CommentsViewModel::class.java)
+
+        try {
+            commentsViewModel.getComments(getPost.id)
+
+            binding.tvDetailPostTitle.text = getPost.title
+            binding.tvDetailPostName.text = getUser.name
+            binding.tvDetailPostBody.text = getPost.body
+
+            commentsViewModel.comments.observe(this, { comments ->
+                setCommentsData(comments)
+            })
+
+            commentsViewModel.isLoading.observe(this, {
+                showLoading(it)
+            })
+
+            val layoutManager = LinearLayoutManager(this)
+            binding.rvComments.layoutManager = layoutManager
+
+        } catch (e: Exception) {
+            Log.e("DetailPostActivity", "onCreate: ${e.message}")
+        }
     }
 
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()
         return true
+    }
+
+    private fun setCommentsData(comments: List<CommentsResponseItem>) {
+
+        val listComment = ArrayList<CommentsResponseItem>()
+        listComment.clear()
+
+        listComment.addAll(comments)
+
+        val adapter = CommentsAdapter(listComment)
+
+        binding.rvComments.adapter = adapter
+    }
+
+
+    private fun showLoading(isLoading: Boolean) {
+        binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
     }
 
     companion object {
