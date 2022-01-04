@@ -12,7 +12,9 @@ import com.ryfazrin.technicaltestmobileapp.data.DetailUserResponse
 import com.ryfazrin.technicaltestmobileapp.data.PostsResponseItem
 import com.ryfazrin.technicaltestmobileapp.databinding.ActivityMainBinding
 import com.ryfazrin.technicaltestmobileapp.ui.detailpost.DetailPostActivity
+import kotlinx.coroutines.DelicateCoroutinesApi
 
+@DelicateCoroutinesApi
 class MainActivity : AppCompatActivity() {
 
     private lateinit var mainViewModel: MainViewModel
