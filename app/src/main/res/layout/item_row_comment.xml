@@ -7,7 +7,7 @@
     android:layout_gravity="center">
 
     <TextView
-        android:id="@+id/rv_post_comment_name"
+        android:id="@+id/tv_post_comment_name"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
@@ -18,14 +18,14 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/rv_post_comment_body"
+        android:id="@+id/tv_post_comment_body"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
         android:text="comment text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/rv_post_comment_name" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_post_comment_name" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
