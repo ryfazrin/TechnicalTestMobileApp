@@ -63,6 +63,7 @@ class MainActivity : AppCompatActivity() {
                             } else {
                                 Log.e("MainActivity", "listPost.size: ${listPost.size}")
                                 setPostData(posts, mainViewModel.listUser, listPost.size)
+                                binding.rvPosts.scrollToPosition(listSizeAfterLoading - 5)
                             }
                             showLoading(false)
                         }
