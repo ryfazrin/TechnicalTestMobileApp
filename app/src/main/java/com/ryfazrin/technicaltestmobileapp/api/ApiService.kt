@@ -1,5 +1,7 @@
 package com.ryfazrin.technicaltestmobileapp.api
 
+import com.ryfazrin.technicaltestmobileapp.data.CommentsResponse
+import com.ryfazrin.technicaltestmobileapp.data.CommentsResponseItem
 import com.ryfazrin.technicaltestmobileapp.data.DetailUserResponse
 import com.ryfazrin.technicaltestmobileapp.data.PostsResponseItem
 import retrofit2.Call
@@ -14,4 +16,9 @@ interface ApiService {
     fun getDetailUser(
         @Path("userId") userId: Int
     ) : Call<DetailUserResponse>
+
+    @GET("posts/{postId}/comments")
+    fun getCommentsPost(
+        @Path("postId") postId: Int
+    ) : Call<List<CommentsResponseItem>>
 }
