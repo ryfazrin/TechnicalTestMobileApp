@@ -28,7 +28,7 @@ class MainPostsAdapter(
 
         fun bind(posts: PostsResponseItem, user: DetailUserResponse) {
             with(binding) {
-                tvPostTitle.text = posts.title
+                tvPostTitle.text = "${posts.id}. ${posts.title}"
                 tvPostBody.text = posts.body
                 tvPostUsername.text = user.name
                 tvPostUserCompany.text = user.company.name
