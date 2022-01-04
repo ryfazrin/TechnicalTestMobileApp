@@ -21,9 +21,6 @@ class MainViewModel : ViewModel() {
     private val _posts = MutableLiveData<List<PostsResponseItem>>()
     val posts: LiveData<List<PostsResponseItem>> = _posts
 
-//    private val _user = MutableLiveData<List<DetailUserResponse>>()
-//    val user: LiveData<List<DetailUserResponse>> = _user
-
     var listUser = ArrayList<DetailUserResponse>()
 
     private val _isLoading = MutableLiveData<Boolean>()
@@ -36,7 +33,7 @@ class MainViewModel : ViewModel() {
         showPosts()
     }
 
-    fun showPosts() {
+    private fun showPosts() {
         _isLoading.value = true
         val client = ApiConfig.getApiService().getPosts()
         client.enqueue(object : Callback<List<PostsResponseItem>> {
@@ -44,12 +41,9 @@ class MainViewModel : ViewModel() {
                 call: Call<List<PostsResponseItem>>,
                 response: Response<List<PostsResponseItem>>
             ) {
-//                _isLoading.value = false
                 if (response.isSuccessful) {
                     val responseBody = response.body()
                     if (responseBody != null) {
-//                        _isMessage.value = false
-
                         try {
                             val jobGetUser = GlobalScope.launch {
                                 for (post in responseBody) {
@@ -89,7 +83,6 @@ class MainViewModel : ViewModel() {
                 if (response.isSuccessful) {
                     val responseBody = response.body()
                     if (responseBody != null) {
-//                        _user.value = responseBody
                         listUser.add(responseBody)
                     }
                 }
