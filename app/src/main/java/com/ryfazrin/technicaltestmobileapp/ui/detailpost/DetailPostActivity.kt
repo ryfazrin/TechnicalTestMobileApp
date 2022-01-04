@@ -1,5 +1,6 @@
 package com.ryfazrin.technicaltestmobileapp.ui.detailpost
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -10,6 +11,8 @@ import com.ryfazrin.technicaltestmobileapp.data.CommentsResponseItem
 import com.ryfazrin.technicaltestmobileapp.data.DetailUserResponse
 import com.ryfazrin.technicaltestmobileapp.data.PostsResponseItem
 import com.ryfazrin.technicaltestmobileapp.databinding.ActivityDetailPostBinding
+import com.ryfazrin.technicaltestmobileapp.ui.detailpost.DetailPostActivity.Companion.EXTRA_DETAIL_USER
+import com.ryfazrin.technicaltestmobileapp.ui.detailuser.DetailUserActivity
 
 class DetailPostActivity : AppCompatActivity() {
 
@@ -47,6 +50,12 @@ class DetailPostActivity : AppCompatActivity() {
 
             val layoutManager = LinearLayoutManager(this)
             binding.rvComments.layoutManager = layoutManager
+
+            binding.tvDetailPostName.setOnClickListener {
+                val moveDetailUserIntent = Intent(this@DetailPostActivity, DetailUserActivity::class.java)
+                moveDetailUserIntent.putExtra(DetailUserActivity.EXTRA_DETAIL_USER, getUser)
+                startActivity(moveDetailUserIntent)
+            }
 
         } catch (e: Exception) {
             Log.e("DetailPostActivity", "onCreate: ${e.message}")
