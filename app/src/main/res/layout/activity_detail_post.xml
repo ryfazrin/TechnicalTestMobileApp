@@ -27,6 +27,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
+        android:textColor="@color/design_default_color_primary"
         android:text="username"
         app:layout_constraintEnd_toEndOf="@+id/tv_detail_post_title"
         app:layout_constraintStart_toStartOf="@+id/tv_detail_post_title"
@@ -42,5 +43,27 @@
         app:layout_constraintEnd_toEndOf="@+id/tv_detail_post_name"
         app:layout_constraintStart_toStartOf="@+id/tv_detail_post_name"
         app:layout_constraintTop_toBottomOf="@+id/tv_detail_post_name" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:textSize="18sp"
+        android:text="Comments"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_detail_post_body" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="6dp"
+        tools:listitem="@layout/item_row_comment"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
