@@ -1,4 +1,4 @@
-package com.ryfazrin.technicaltestmobileapp
+package com.ryfazrin.technicaltestmobileapp.ui.main
 
 import android.util.Log
 import androidx.lifecycle.LiveData

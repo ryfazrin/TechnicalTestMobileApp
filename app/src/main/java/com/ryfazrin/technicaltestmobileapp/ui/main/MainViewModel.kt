@@ -1,4 +1,4 @@
-package com.ryfazrin.technicaltestmobileapp
+package com.ryfazrin.technicaltestmobileapp.ui.main
 
 import android.util.Log
 import androidx.lifecycle.LiveData
@@ -14,7 +14,6 @@ import kotlinx.coroutines.runBlocking
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import kotlin.math.log
 
 @DelicateCoroutinesApi
 class MainViewModel : ViewModel() {

@@ -5,18 +5,11 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.ryfazrin.technicaltestmobileapp.MainPostsAdapter
-import com.ryfazrin.technicaltestmobileapp.MainViewModel
-import com.ryfazrin.technicaltestmobileapp.R
 import com.ryfazrin.technicaltestmobileapp.data.CommentsResponseItem
 import com.ryfazrin.technicaltestmobileapp.data.DetailUserResponse
 import com.ryfazrin.technicaltestmobileapp.data.PostsResponseItem
 import com.ryfazrin.technicaltestmobileapp.databinding.ActivityDetailPostBinding
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.MainScope
-import kotlinx.coroutines.launch
 
 class DetailPostActivity : AppCompatActivity() {
 
