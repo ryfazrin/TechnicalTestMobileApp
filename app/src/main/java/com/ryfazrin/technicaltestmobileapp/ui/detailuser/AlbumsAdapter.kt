@@ -1,8 +1,6 @@
 package com.ryfazrin.technicaltestmobileapp.ui.detailuser
 
-import android.util.Log
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -14,7 +12,6 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 
-//class AlbumsAdapter(private val listAlbum: ArrayList<AlbumsResponseItem>) : RecyclerView.Adapter<AlbumsAdapter.ListViewHolder>()  {
 @DelicateCoroutinesApi
 class AlbumsAdapter(
     private val listAlbum: ArrayList<AlbumsResponseItem>,
