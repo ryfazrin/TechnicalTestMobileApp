@@ -23,6 +23,7 @@ class AlbumsViewModel : ViewModel() {
 
 //    var photos = ArrayList<List<PhotosResponseItem>>()
 //    val photos: ArrayList<List<PhotosResponseItem>> = _photos
+
     private val _photos = MutableLiveData<List<PhotosResponseItem>>()
     val photos: LiveData<List<PhotosResponseItem>> = _photos
 
@@ -80,7 +81,7 @@ class AlbumsViewModel : ViewModel() {
                 if (response.isSuccessful) {
                     val responseBody = response.body()
                     if (responseBody != null) {
-//                        photos.add(listOf(responseBody.first()))
+//                        photos.add(responseBody)
                         _photos.value = responseBody
                     }
                 }

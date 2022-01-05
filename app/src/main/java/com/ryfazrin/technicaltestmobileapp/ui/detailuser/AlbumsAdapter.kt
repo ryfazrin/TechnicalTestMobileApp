@@ -3,7 +3,7 @@ package com.ryfazrin.technicaltestmobileapp.ui.detailuser
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.lifecycle.LiveData
 import androidx.recyclerview.widget.RecyclerView
 import com.ryfazrin.technicaltestmobileapp.data.AlbumsResponseItem
 import com.ryfazrin.technicaltestmobileapp.data.PhotosResponseItem
@@ -32,11 +32,11 @@ class AlbumsAdapter(
 
             with(binding) {
                 tvTitleAlbum.text = album.title
-//                tvTitlePhotos.text = photos.title
-                val layoutManager = LinearLayoutManager(detailUserActivity)
-                rvAlbumPhotos.layoutManager = layoutManager
-                val adapter = PhotosAdapter(listOf(photos))
-                rvAlbumPhotos.adapter = adapter
+                tvTitlePhotos.text = "${photos.id}. ${photos.title}"
+//                val layoutManager = LinearLayoutManager(detailUserActivity)
+//                rvAlbumPhotos.layoutManager = layoutManager
+//                val adapter = PhotosAdapter(photos)
+//                rvAlbumPhotos.adapter = adapter
             }
         }
     }
