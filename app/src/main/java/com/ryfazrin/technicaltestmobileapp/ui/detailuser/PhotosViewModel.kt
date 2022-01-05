@@ -1,8 +1,6 @@
 package com.ryfazrin.technicaltestmobileapp.ui.detailuser
 
 import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.ryfazrin.technicaltestmobileapp.api.ApiConfig
 import com.ryfazrin.technicaltestmobileapp.data.PhotosResponseItem
@@ -12,11 +10,12 @@ import retrofit2.Response
 
 class PhotosViewModel : ViewModel() {
 
-//    private val _photos = MutableLiveData<List<PhotosResponseItem>>()
-//    val photos: LiveData<List<PhotosResponseItem>> = _photos
+    private val _photos = ArrayList<List<PhotosResponseItem>>()
+    val photos: ArrayList<List<PhotosResponseItem>> = _photos
 
-    fun getPhotos(albumId: Int): List<PhotosResponseItem> {
-        var r: List<PhotosResponseItem> = ArrayList<PhotosResponseItem>()
+    fun getPhotos(albumId: Int) {
+//    fun getPhotos(albumId: Int): List<PhotosResponseItem> {
+//        var r: List<PhotosResponseItem> = ArrayList<PhotosResponseItem>()
 
         val client = ApiConfig.getApiService().getAlbumPhotos(albumId)
         client.enqueue(object : Callback<List<PhotosResponseItem>> {
@@ -27,8 +26,12 @@ class PhotosViewModel : ViewModel() {
                 if (response.isSuccessful) {
                     val responseBody = response.body()
                     if (responseBody != null) {
-//                        _photos.value = responseBody
-                        r = responseBody
+//                            val tes = async {
+//                                responseBody
+//                            }
+                            _photos.add(responseBody)
+//                        Log.e("PhotosViewModel", "responseBody: $photos")
+//                        r = responseBody
                     }
                 }
             }
@@ -37,7 +40,8 @@ class PhotosViewModel : ViewModel() {
                 Log.e(TAG, "onFailure: ${t.message}")
             }
         })
-        return r
+//        return r
+//        Log.e("PhotosViewModel", "response: $_photos")
     }
 
     companion object {
