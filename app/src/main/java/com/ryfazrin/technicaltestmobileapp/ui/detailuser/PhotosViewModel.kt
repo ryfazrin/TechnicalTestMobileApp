@@ -14,9 +14,6 @@ class PhotosViewModel : ViewModel() {
     val photos: ArrayList<List<PhotosResponseItem>> = _photos
 
     fun getPhotos(albumId: Int) {
-//    fun getPhotos(albumId: Int): List<PhotosResponseItem> {
-//        var r: List<PhotosResponseItem> = ArrayList<PhotosResponseItem>()
-
         val client = ApiConfig.getApiService().getAlbumPhotos(albumId)
         client.enqueue(object : Callback<List<PhotosResponseItem>> {
             override fun onResponse(
@@ -26,12 +23,7 @@ class PhotosViewModel : ViewModel() {
                 if (response.isSuccessful) {
                     val responseBody = response.body()
                     if (responseBody != null) {
-//                            val tes = async {
-//                                responseBody
-//                            }
                             _photos.add(responseBody)
-//                        Log.e("PhotosViewModel", "responseBody: $photos")
-//                        r = responseBody
                     }
                 }
             }
