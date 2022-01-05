@@ -10,7 +10,6 @@
     android:layout_marginTop="4dp"
     android:layout_marginBottom="4dp"
     android:padding="8dp">
-<!--  title, body, username, user company name  -->
 
     <TextView
         android:id="@+id/tv_post_title"

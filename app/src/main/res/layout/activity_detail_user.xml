@@ -56,6 +56,7 @@
         app:layout_constraintTop_toBottomOf="@+id/tv_user_address" />
 
     <TextView
+        android:id="@+id/tv_albums"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
@@ -64,5 +65,15 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_user_company_name" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_user_albums"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_albums"
+        tools:listitem="@layout/item_row_comment" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
