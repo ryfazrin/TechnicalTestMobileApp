@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ryfazrin.technicaltestmobileapp.data.AlbumsResponseItem
 import com.ryfazrin.technicaltestmobileapp.data.DetailUserResponse
@@ -46,10 +47,10 @@ class DetailUserActivity : AppCompatActivity() {
         binding.tvUserCompanyName.text = company.name
 
         albumsViewModel.albums.observe(this, { albums ->
-//            setAlbumsData(albums, albumsViewModel.photos)
-            albumsViewModel.photos.observe(this, { photos ->
-                setAlbumsData(albums, photos)
-            })
+            setAlbumsData(albums, albumsViewModel.photos)
+//            albumsViewModel.photos.observe(this, { photos ->
+//                setAlbumsData(albums, photos)
+//            })
         })
 
         albumsViewModel.isLoading.observe(this, {
@@ -58,6 +59,9 @@ class DetailUserActivity : AppCompatActivity() {
 
         val layoutManager = LinearLayoutManager(this)
         binding.rvAlbums.layoutManager = layoutManager
+
+        val itemDecoration = DividerItemDecoration(this, layoutManager.orientation)
+        binding.rvAlbums.addItemDecoration(itemDecoration)
     }
 
     override fun onSupportNavigateUp(): Boolean {
@@ -74,7 +78,7 @@ class DetailUserActivity : AppCompatActivity() {
 
     private fun setAlbumsData(
         albums: List<AlbumsResponseItem>,
-        photos: List<PhotosResponseItem>,
+        photos: ArrayList<List<PhotosResponseItem>>,
 //        photos: ArrayList<List<PhotosResponseItem>>
     ) {
 
@@ -116,7 +120,7 @@ class DetailUserActivity : AppCompatActivity() {
             counter++
         }
 
-        val adapter = AlbumsAdapter(listAlbum, photos, this)
+        val adapter = AlbumsAdapter(listAlbum, photos)
 
         binding.rvAlbums.adapter = adapter
 
