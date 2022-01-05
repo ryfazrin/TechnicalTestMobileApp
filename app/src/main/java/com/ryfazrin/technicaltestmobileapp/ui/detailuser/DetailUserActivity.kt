@@ -46,6 +46,7 @@ class DetailUserActivity : AppCompatActivity() {
         binding.tvUserCompanyName.text = company.name
 
         albumsViewModel.albums.observe(this, { albums ->
+//            setAlbumsData(albums, albumsViewModel.photos)
             albumsViewModel.photos.observe(this, { photos ->
                 setAlbumsData(albums, photos)
             })
