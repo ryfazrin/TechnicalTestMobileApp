@@ -9,6 +9,9 @@ import com.ryfazrin.technicaltestmobileapp.data.AlbumsResponseItem
 import com.ryfazrin.technicaltestmobileapp.data.PhotosResponseItem
 import com.ryfazrin.technicaltestmobileapp.databinding.ItemRowAlbumBinding
 import kotlinx.coroutines.DelicateCoroutinesApi
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 
 //class AlbumsAdapter(private val listAlbum: ArrayList<AlbumsResponseItem>) : RecyclerView.Adapter<AlbumsAdapter.ListViewHolder>()  {
 @DelicateCoroutinesApi
@@ -33,7 +36,6 @@ class AlbumsAdapter(
                 rvAlbumPhotos.layoutManager = layoutManager
                 val adapter = PhotosAdapter(photos)
                 rvAlbumPhotos.adapter = adapter
-                Log.e("AlbumsAdapter", "bind: $photos")
             }
         }
     }
@@ -45,7 +47,15 @@ class AlbumsAdapter(
 
     override fun onBindViewHolder(holder: ListViewHolder, position: Int) {
 //        holder.bind(listAlbum[position])
-        holder.bind(listAlbum[position], listPhotos[position], detailUserActivity)
+        val jobListPhotos = GlobalScope.launch {
+            listPhotos
+        }
+
+        runBlocking {
+            jobListPhotos.join()
+            Log.e("AlbumsAdapter", "onBindViewHolder: ${listPhotos[0]}")
+            holder.bind(listAlbum[position], listPhotos[position], detailUserActivity)
+        }
     }
 
     override fun getItemCount(): Int = listAlbum.size
