@@ -3,12 +3,17 @@ package com.ryfazrin.technicaltestmobileapp.ui.detailuser
 import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
+import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.ryfazrin.technicaltestmobileapp.data.AlbumsResponseItem
 import com.ryfazrin.technicaltestmobileapp.data.DetailUserResponse
 import com.ryfazrin.technicaltestmobileapp.databinding.ActivityDetailUserBinding
 import com.ryfazrin.technicaltestmobileapp.ui.detailpost.DetailPostActivity
 
 class DetailUserActivity : AppCompatActivity() {
 
+    private lateinit var albumsViewModel: AlbumsViewModel
     private lateinit var binding: ActivityDetailUserBinding
 
     @SuppressLint("SetTextI18n")
@@ -23,6 +28,11 @@ class DetailUserActivity : AppCompatActivity() {
             EXTRA_DETAIL_USER
         ) as DetailUserResponse
 
+        albumsViewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory())
+            .get(AlbumsViewModel::class.java)
+
+        albumsViewModel.getAlbums(getUser.id)
+
         binding.tvUserName.text = getUser.name
         binding.tvUserEmail.text = getUser.email
         val address = getUser.address
@@ -30,11 +40,39 @@ class DetailUserActivity : AppCompatActivity() {
         val company = getUser.company
         binding.tvUserCompanyName.text = company.name
 
+        albumsViewModel.albums.observe(this, { albums ->
+            setAlbumsData(albums)
+        })
+
+        albumsViewModel.isLoading.observe(this, {
+            showLoading(it)
+        })
+
+        val layoutManager = LinearLayoutManager(this)
+        binding.rvAlbums.layoutManager = layoutManager
     }
 
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()
         return true
+    }
+
+
+    private fun setAlbumsData(albums: List<AlbumsResponseItem>) {
+
+        val listAlbum = ArrayList<AlbumsResponseItem>()
+        listAlbum.clear()
+
+        listAlbum.addAll(albums)
+
+        val adapter = AlbumsAdapter(listAlbum)
+
+        binding.rvAlbums.adapter = adapter
+    }
+
+
+    private fun showLoading(isLoading: Boolean) {
+        binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
     }
 
     companion object {
