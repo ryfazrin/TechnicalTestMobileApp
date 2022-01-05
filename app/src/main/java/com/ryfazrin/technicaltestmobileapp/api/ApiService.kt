@@ -23,4 +23,9 @@ interface ApiService {
     fun getUserAlbums(
         @Path("userId") userId: Int
     ) : Call<List<AlbumsResponseItem>>
+
+    @GET("albums/{albumId}/photos")
+    fun getAlbumPhotos(
+        @Path("albumId") albumId: Int
+    ) : Call<List<PhotosResponseItem>>
 }
