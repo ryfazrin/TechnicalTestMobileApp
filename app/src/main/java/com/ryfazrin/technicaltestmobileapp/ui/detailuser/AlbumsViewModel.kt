@@ -22,10 +22,8 @@ class AlbumsViewModel : ViewModel() {
     val albums: LiveData<List<AlbumsResponseItem>> = _albums
 
     var photos = ArrayList<List<PhotosResponseItem>>()
-//    val photos: ArrayList<List<PhotosResponseItem>> = _photos
 
     private val _photos = MutableLiveData<List<PhotosResponseItem>>()
-//    val photos: LiveData<List<List<PhotosResponseItem>>> = _photos
 
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> = _isLoading
@@ -46,7 +44,6 @@ class AlbumsViewModel : ViewModel() {
                         try {
                             val jobGetPhoto = GlobalScope.launch {
                                 for (albums in responseBody) {
-//                                    getPhotos(albums.id)
                                     getPhotos(albums.id)?.let { photos.add(it) }
                                     Log.e(TAG, "onResponse getAlbums: $photos")
                                 }
@@ -73,7 +70,6 @@ class AlbumsViewModel : ViewModel() {
     }
 
     fun getPhotos(albumId: Int): List<PhotosResponseItem>? {
-//        var data: List<PhotosResponseItem> = listOf()
         val client = ApiConfig.getApiService().getAlbumPhotos(albumId)
         client.enqueue(object : Callback<List<PhotosResponseItem>> {
             override fun onResponse(
@@ -83,12 +79,9 @@ class AlbumsViewModel : ViewModel() {
                 if (response.isSuccessful) {
                     val responseBody = response.body()
                     if (responseBody != null) {
-//                        photos.add(responseBody)
-//                        _photos.value = responseBody
                         _photos.value = responseBody
                     }
                 }
-//                Log.e(TAG, "onResponse getPhotos: ${photos}")
             }
 
             override fun onFailure(call: Call<List<PhotosResponseItem>>, t: Throwable) {
@@ -98,8 +91,6 @@ class AlbumsViewModel : ViewModel() {
 
         Log.e(TAG, "onResponse getPhotos: ${_photos.value}")
         return _photos.value
-//        Log.e("PhotosViewModel", "response: $_photos")
-//        Log.e(TAG, "onResponse photos: $photos")
     }
 
     companion object {

@@ -32,8 +32,6 @@ class PhotosViewModel : ViewModel() {
                 Log.e(TAG, "onFailure: ${t.message}")
             }
         })
-//        return r
-//        Log.e("PhotosViewModel", "response: $_photos")
     }
 
     companion object {

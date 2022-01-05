@@ -96,15 +96,12 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setPostData(posts: List<PostsResponseItem>, users: ArrayList<DetailUserResponse>, listLength: Int = 0) {
-//        listPost.clear()
         var counter = listLength
 
         while (counter < listLength + 10){
             listPost.add(posts[counter])
             counter++
         }
-
-//        listPost.addAll(posts)
 
         val adapter = MainPostsAdapter(listPost, users)
 

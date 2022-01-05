@@ -20,10 +20,8 @@ class AlbumsAdapter(
 
     inner class ListViewHolder(private val binding: ItemRowAlbumBinding) : RecyclerView.ViewHolder(binding.root) {
 
-//        fun bind(album: AlbumsResponseItem) {
         fun bind(
         album: AlbumsResponseItem
-//        photos: List<PhotosResponseItem>
     ) {
         val photoDummy = listOf<PhotosResponseItem>(
             PhotosResponseItem(
@@ -43,9 +41,7 @@ class AlbumsAdapter(
         )
             with(binding) {
                 tvTitleAlbum.text = album.title
-//                tvTitlePhotos.text = "${photos.id}. ${photos.title}"
                 val layoutManager = LinearLayoutManager(itemView.context, LinearLayoutManager.VERTICAL, false)
-//                val layoutManager = LinearLayoutManager(binding.root.context, LinearLayoutManager.VERTICAL, false)
                 rvAlbumPhotos.layoutManager = layoutManager
                 val adapter = PhotosAdapter(photoDummy)
                 rvAlbumPhotos.adapter = adapter
@@ -59,15 +55,12 @@ class AlbumsAdapter(
     }
 
     override fun onBindViewHolder(holder: ListViewHolder, position: Int) {
-//        holder.bind(listAlbum[position])
         val jobListPhotos = GlobalScope.launch {
             listPhotos
         }
 
         runBlocking {
             jobListPhotos.join()
-//            Log.e("AlbumsAdapter", "onBindViewHolder $position: ${listPhotos[1]}")
-//            holder.bind(listAlbum[position], listPhotos[position])
             holder.bind(listAlbum[position])
         }
     }
