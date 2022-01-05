@@ -17,7 +17,7 @@ import kotlinx.coroutines.runBlocking
 @DelicateCoroutinesApi
 class AlbumsAdapter(
     private val listAlbum: ArrayList<AlbumsResponseItem>,
-    private val listPhotos: ArrayList<List<PhotosResponseItem>>,
+    private val listPhotos: List<PhotosResponseItem>,
     private val detailUserActivity: DetailUserActivity
 ) : RecyclerView.Adapter<AlbumsAdapter.ListViewHolder>()  {
 
@@ -26,15 +26,16 @@ class AlbumsAdapter(
 //        fun bind(album: AlbumsResponseItem) {
         fun bind(
     album: AlbumsResponseItem,
-    photos: List<PhotosResponseItem>,
+    photos: PhotosResponseItem,
     detailUserActivity: DetailUserActivity
 ) {
 
             with(binding) {
                 tvTitleAlbum.text = album.title
+//                tvTitlePhotos.text = photos.title
                 val layoutManager = LinearLayoutManager(detailUserActivity)
                 rvAlbumPhotos.layoutManager = layoutManager
-                val adapter = PhotosAdapter(photos)
+                val adapter = PhotosAdapter(listOf(photos))
                 rvAlbumPhotos.adapter = adapter
             }
         }
@@ -53,7 +54,7 @@ class AlbumsAdapter(
 
         runBlocking {
             jobListPhotos.join()
-            Log.e("AlbumsAdapter", "onBindViewHolder: ${listPhotos[0]}")
+            Log.e("AlbumsAdapter", "onBindViewHolder $position: ${listPhotos[1]}")
             holder.bind(listAlbum[position], listPhotos[position], detailUserActivity)
         }
     }

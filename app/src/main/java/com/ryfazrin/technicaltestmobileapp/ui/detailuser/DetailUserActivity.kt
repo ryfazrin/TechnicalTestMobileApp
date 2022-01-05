@@ -46,7 +46,9 @@ class DetailUserActivity : AppCompatActivity() {
         binding.tvUserCompanyName.text = company.name
 
         albumsViewModel.albums.observe(this, { albums ->
-            setAlbumsData(albums, albumsViewModel.photos)
+            albumsViewModel.photos.observe(this, { photos ->
+                setAlbumsData(albums, photos)
+            })
         })
 
         albumsViewModel.isLoading.observe(this, {
@@ -71,7 +73,8 @@ class DetailUserActivity : AppCompatActivity() {
 
     private fun setAlbumsData(
         albums: List<AlbumsResponseItem>,
-        photos: ArrayList<List<PhotosResponseItem>>
+        photos: List<PhotosResponseItem>,
+//        photos: ArrayList<List<PhotosResponseItem>>
     ) {
 
         val listAlbum = ArrayList<AlbumsResponseItem>()

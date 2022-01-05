@@ -8,6 +8,7 @@ import com.ryfazrin.technicaltestmobileapp.api.ApiConfig
 import com.ryfazrin.technicaltestmobileapp.data.AlbumsResponseItem
 import com.ryfazrin.technicaltestmobileapp.data.PhotosResponseItem
 import com.ryfazrin.technicaltestmobileapp.ui.main.MainViewModel
+import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
@@ -20,12 +21,15 @@ class AlbumsViewModel : ViewModel() {
     private val _albums = MutableLiveData<List<AlbumsResponseItem>>()
     val albums: LiveData<List<AlbumsResponseItem>> = _albums
 
-    var photos = ArrayList<List<PhotosResponseItem>>()
+//    var photos = ArrayList<List<PhotosResponseItem>>()
 //    val photos: ArrayList<List<PhotosResponseItem>> = _photos
+    private val _photos = MutableLiveData<List<PhotosResponseItem>>()
+    val photos: LiveData<List<PhotosResponseItem>> = _photos
 
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> = _isLoading
 
+    @DelicateCoroutinesApi
     fun getAlbums(userId: Int) {
         _isLoading.value = true
         val client = ApiConfig.getApiService().getUserAlbums(userId)
@@ -42,7 +46,7 @@ class AlbumsViewModel : ViewModel() {
                             val jobGetPhoto = GlobalScope.launch {
                                 for (albums in responseBody) {
                                     getPhotos(albums.id)
-                                    //Log.e(TAG, "onResponse photos: $photos")
+                                    Log.e(TAG, "onResponse getAlbums: $photos")
                                 }
                             }
 
@@ -76,9 +80,11 @@ class AlbumsViewModel : ViewModel() {
                 if (response.isSuccessful) {
                     val responseBody = response.body()
                     if (responseBody != null) {
-                        photos.add(responseBody)
+//                        photos.add(listOf(responseBody.first()))
+                        _photos.value = responseBody
                     }
                 }
+//                Log.e(TAG, "onResponse getPhotos: ${photos}")
             }
 
             override fun onFailure(call: Call<List<PhotosResponseItem>>, t: Throwable) {
