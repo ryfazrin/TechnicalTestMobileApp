@@ -3,14 +3,18 @@ package com.ryfazrin.technicaltestmobileapp.ui.detailuser
 import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ryfazrin.technicaltestmobileapp.data.AlbumsResponseItem
 import com.ryfazrin.technicaltestmobileapp.data.DetailUserResponse
+import com.ryfazrin.technicaltestmobileapp.data.PhotosResponseItem
 import com.ryfazrin.technicaltestmobileapp.databinding.ActivityDetailUserBinding
-import com.ryfazrin.technicaltestmobileapp.ui.detailpost.DetailPostActivity
+import kotlinx.coroutines.DelicateCoroutinesApi
+import kotlinx.coroutines.*
 
+@DelicateCoroutinesApi
 class DetailUserActivity : AppCompatActivity() {
 
     private lateinit var albumsViewModel: AlbumsViewModel
@@ -30,6 +34,8 @@ class DetailUserActivity : AppCompatActivity() {
 
         albumsViewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory())
             .get(AlbumsViewModel::class.java)
+//        photoViewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory())
+//            .get(PhotosViewModel::class.java)
 
         albumsViewModel.getAlbums(getUser.id)
 
@@ -61,13 +67,55 @@ class DetailUserActivity : AppCompatActivity() {
     private fun setAlbumsData(albums: List<AlbumsResponseItem>) {
 
         val listAlbum = ArrayList<AlbumsResponseItem>()
+        val listPhotos = ArrayList<List<PhotosResponseItem>>()
         listAlbum.clear()
+        listPhotos.clear()
 
-        listAlbum.addAll(albums)
+        var counter = 0
+        while (counter < albums.size){
+            listAlbum.add(albums[counter])
 
-        val adapter = AlbumsAdapter(listAlbum)
+            val photoViewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory())
+                .get(PhotosViewModel::class.java)
+
+            runBlocking {
+                val getPhotos = async { photoViewModel.getPhotos(albums[counter].id) }
+
+                Log.e("DetailUserActivity", "album id: ${albums[counter].id}")
+                listPhotos.add(getPhotos.await())
+//                photoViewModel.photos.observe(this, { photos ->
+//                    listPhotos.add(photos)
+//                })
+            }
+
+            counter++
+        }
+
+        Log.e("DetailUserActivity", "getPhotoData: ${listPhotos.size}")
+
+        val adapter = AlbumsAdapter(listAlbum, listPhotos)
 
         binding.rvAlbums.adapter = adapter
+
+//        val jobListPhotos = GlobalScope.launch {
+//            var counter = 0
+//            while (counter < albums.size){
+//                listAlbum.add(albums[counter])
+//                photoViewModel.getPhotos(albums[counter].id)
+//                photoViewModel.photos.observeForever { photos ->
+//                    listPhotos.add(photos)
+//                }
+//
+//                counter++
+//            }
+//        }
+//        //        listAlbum.addAll(albums)
+//        runBlocking {
+//            jobListPhotos.join()
+//            val adapter = AlbumsAdapter(listAlbum, listPhotos)
+//
+//            binding.rvAlbums.adapter = adapter
+//        }
     }
 
 
